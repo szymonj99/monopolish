@@ -1,0 +1,20 @@
+// Szymon Janusz G20792986
+
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
+#include "CMonopolish.h"
+
+int main()
+{
+	{
+		auto Game = std::make_unique<CMonopolish>();
+		Game->StartGame();
+	}
+
+	_CrtDumpMemoryLeaks();
+	std::cout << "Program execution finished. Press enter to exit.\n";
+	std::cin.get();
+	return GlobalConstants::EExitCodes::SuccessFinish;
+}
