@@ -3,15 +3,15 @@
 // Disable warning about using enum class over enum.
 #pragma warning(disable: 26812)
 
-#include "CSquareGo.h"
+#include "CSquareBonus.h"
 
-CSquareGo::CSquareGo(const ESquareType kType, const std::string& kName)
+CSquareBonus::CSquareBonus(const ESquareType kType, const std::string& kName)
 {
 	SetType(kType);
 	SetName(kName);
 }
 
-bool CSquareGo::LandOnSquare(std::unique_ptr<CPlayer> player)
+bool CSquareBonus::LandOnSquare(std::unique_ptr<CPlayer> player)
 {
 	return true;
 }

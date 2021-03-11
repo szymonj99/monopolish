@@ -2,6 +2,11 @@
 
 #include "CPiece.h"
 
+CPiece::CPiece(const std::string& kName)
+{
+	mName = kName;
+}
+
 std::string CPiece::GetName() const
 {
 	return mName;

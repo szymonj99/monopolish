@@ -4,10 +4,10 @@
 #include "CSquare.h"
 #include "Constants.h"
 
-class CSquareProperty : protected CSquare
+class CSquareProperty : public CSquare
 {
 public:
-	CSquareProperty() {};
+	//CSquareProperty() {};
 	//~CSquareProperty() {};
 	CSquareProperty(const ESquareType kType, const std::string& kName, const int32_t kCost, const int32_t kRent, const ESquareColour kColour);
 	//int32_t GetCost() const;

@@ -7,12 +7,11 @@
 
 CSquareProperty::CSquareProperty(const ESquareType kType, const std::string& kName, const int32_t kCost, const int32_t kRent, const ESquareColour kColour)
 {
-	this->mType = kType;
-	//mType = kType;
-	//mName = kName;
-	//mCost = kCost;
-	//mRent = kRent;
-	//mColour = kColour;
+	SetType(kType);
+	SetName(kName);
+	SetCost(kCost);
+	SetRent(kRent);
+	SetSquareColour(kColour);
 }
 
 bool CSquareProperty::LandOnSquare(std::unique_ptr<CPlayer> player)

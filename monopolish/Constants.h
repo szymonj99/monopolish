@@ -1,5 +1,8 @@
 // Szymon Janusz G20792986
 
+// Disable warning about truncation of value for the pound sign.
+#pragma warning(disable: 4309)
+
 #pragma once
 #include <string>
 
@@ -21,7 +24,7 @@ namespace GlobalConstants
 		Bonus,
 		Penalty,
 		Jail,
-		GoToParking,
+		GoToJail,
 		FreeParking,
 		None
 	};
@@ -51,7 +54,7 @@ namespace GlobalConstants
 	};
 
 	const int32_t kGO_COLLECTION = 200;
-	const char kPOUND_SIGN = '£'; // 156 or 35 or 163
+	const char kPOUND_SIGN = 156; // 156 or 35 or 163
 	const int32_t kROUNDS_TO_PLAY = 20;
 	const int32_t kNUMBER_OF_SQUARES = 26;
 }

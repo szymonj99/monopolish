@@ -3,7 +3,9 @@
 #pragma once
 #include "CSquare.h"
 
-class CSquareJail : protected CSquare
+class CSquareJail : public CSquare
 {
+public:
+	CSquareJail(const ESquareType kType, const std::string& kName);
+	bool LandOnSquare(std::unique_ptr<CPlayer> player);
 };
-

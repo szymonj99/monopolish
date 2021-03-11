@@ -7,7 +7,11 @@
 #include "CMonopolish.h"
 #include "CSquareProperty.h"
 #include "CSquareGo.h"
+#include "CSquareStation.h"
+#include "CSquareBonus.h"
+#include "CSquarePenalty.h"
 #include "CSquareFreeParking.h"
+#include "CSquareGoToJail.h"
 #include "CSquareJail.h"
 #include "Constants.h"
 #include "CPlayer.h"
@@ -17,6 +21,8 @@ using GlobalConstants::ESquareType;
 using GlobalConstants::EExitCodes;
 using GlobalConstants::ESquareIndexes;
 using GlobalConstants::kNUMBER_OF_SQUARES;
+using GlobalConstants::kROUNDS_TO_PLAY;
+using GlobalConstants::kPOUND_SIGN;
 
 bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 {
@@ -32,7 +38,7 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 
 	// Make sure we have enough memory in the vector
 	// To prevent copying multiple objects repeatedly
-	//mSquares = std::vector<std::unique_ptr<CSquare>>(kNUMBER_OF_SQUARES);
+	mSquares.clear();
 	mSquares.reserve(kNUMBER_OF_SQUARES);
 
 	// Read every line, then parse it.
@@ -55,132 +61,100 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 		{
 		case ESquareType::Property:
 		{
-			const std::string kName = lineMembers.at(ESquareIndexes::FirstName) + " " + lineMembers.at(ESquareIndexes::SecondName);
+			const std::string kName = lineMembers.at(ESquareIndexes::FirstName) + " " +
+				lineMembers.at(ESquareIndexes::SecondName);
 			const int32_t kCost = static_cast<int32_t>(std::stoi(lineMembers.at(ESquareIndexes::Cost)));
 			const int32_t kRent = static_cast<int32_t>(std::stoi(lineMembers.at(ESquareIndexes::Rent)));
 			const ESquareColour kColour = static_cast<ESquareColour>(std::stoi(lineMembers.at(ESquareIndexes::ColourGroup)));
-
-			//auto test = std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour);
-
-			CSquareProperty* test = new CSquareProperty();
-
-			//mSquares.emplace_back(std::make_unique<CSquareProperty>(kType, kName, kCost, kRent, kColour));
-
-			//mSquares.emplace_back(std::move(test));
-			//mSquares.emplace_back(std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour));
-
-			//mSquares.emplace_back(new CSquareProperty(kType, kName, kCost, kRent, kColour));
-
-			//auto test2 = std::make_unique<CSquareProperty>();
-			//test->2
-
-			//squares.push_back(std::move(test));
-			//squares.emplace_back(std::move(test));
-
-			//std::unique_ptr<CSquare> test2 = std::make_unique<CSquareProperty>(kType, kName, kCost, kRent, kColour);
-
-			//squares.push_back(std::move(test));
-
-			//squares.
-			//test->GetCost();
-
-			//squares.emplace_back(std::move(test));
-
-			//squares.emplace_back(new CSquareProperty(kType, kName, kCost, kRent, kColour));
-			//squares.push_back(std::move(test));
-
-			//squares.emplace_back(std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour));
-
-			//squares.push_back(test);
-
-			//squares.emplace_back(new CSquareProperty(kType, kName, kCost, kRent, kColour));
+		
+			mSquares.emplace_back(std::make_unique<CSquareProperty>(kType, kName, kCost, kRent, kColour));
 			break;
 		}
 		case ESquareType::Go:
 		{
 			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
-			//squares.emplace_back(new CSquareGo(kType, kName));
+
+			mSquares.emplace_back(std::make_unique<CSquareGo>(kType, kName));
+			break;
+		}
+		case ESquareType::Station:
+		{
+			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+
+			mSquares.emplace_back(std::make_unique<CSquareStation>(kType, kName));
+			break;
+		}
+		case ESquareType::Bonus:
+		{
+			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+
+			mSquares.emplace_back(std::make_unique<CSquareBonus>(kType, kName));
+			break;
+		}
+		case ESquareType::Penalty:
+		{
+			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+
+			mSquares.emplace_back(std::make_unique<CSquarePenalty>(kType, kName));
+			break;
+		}
+		case ESquareType::Jail:
+		{
+			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+
+			mSquares.emplace_back(std::make_unique<CSquareJail>(kType, kName));
+			break;
+		}
+		case ESquareType::GoToJail:
+		{
+			const std::string kName =
+				lineMembers.at(ESquareIndexes::FirstName) + " " +
+				lineMembers.at(ESquareIndexes::SecondName) + " " +
+				lineMembers.at(ESquareIndexes::ThirdName);
+
+			mSquares.emplace_back(std::make_unique<CSquareGoToJail>(kType, kName));
+			break;
+		}
+		case ESquareType::FreeParking:
+		{
+			const std::string kName =
+				lineMembers.at(ESquareIndexes::FirstName) + " " +
+				lineMembers.at(ESquareIndexes::SecondName);
+
+			mSquares.emplace_back(std::make_unique<CSquareFreeParking>(kType, kName));
 			break;
 		}
 		default:
 		{
 			// Handle error here when the line doesn't match any square types.
-			break;
+			std::cout << "Error when loading file. Press Enter to exit." << std::endl;
+			std::cin.get();
+			std::exit(EExitCodes::LevelFileFail);
 		}
 		}
 	}
 
-	//while (!inputStream.eof())
-	//{
-	//	int32_t item = INT32_MIN;
-	//	inputStream >> item;
-	//	
-	//	// First item is the square type
-	//	switch (item)
-	//	{
-	//	case ESquareType::Property:
-	//	{
-	//		std::string name;
-	//		int32_t cost, rent;
+	return true;
+}
 
-	//		std::istringstream stringStream()
-
-	//		std::unique_ptr<CSquare> prop = std::make_unique<CSquareProperty>(name, cost, rent, ESquareColour::Blue);
-	//		squares.push_back(prop);
-
-	//		break;
-	//	}
-	//	case ESquareType::Go:
-	//	{
-	//		break;
-	//	}
-	//	case ESquareType::Station:
-	//	{
-	//		break;
-	//	}
-	//	case ESquareType::Bonus:
-	//	{
-	//		break;
-	//	}
-	//	case ESquareType::Penalty:
-	//	{
-	//		break;
-	//	}
-	//	case ESquareType::Jail:
-	//	{
-	//		break;
-	//	}
-	//	case ESquareType::GoToParking:
-	//	{
-	//		break;
-	//	}
-	//	case ESquareType::FreeParking:
-	//	{
-	//		break;
-	//	}
-
-	//	default:
-	//	{
-	//		std::cout << "Incorrect level file format." << std::endl;
-	//		std::cin.get();
-	//		exit(EExitCodes::IncorrectLevelFile);
-	//	}
-	//	}
-
-	//	squares.emplace_back(std::make_unique<CSquare>("Test"));
-	//}
-
+bool CMonopolish::SetUpPlayers()
+{
+	mPlayers.clear();
+	const int16_t kMaxPlayers = 2;
+	mPlayers.reserve(kMaxPlayers);
+	mPlayers.emplace_back(std::make_unique<CPlayer>("Dog"));
+	mPlayers.emplace_back(std::make_unique<CPlayer>("Car"));
 	return true;
 }
 
 // Read the seed (first item) in from file.
-int64_t GetSeed(const std::string& SEED_FILE = "seed.txt")
+int64_t CMonopolish::GetSeed(const std::string& kSeedFile = "seed.txt")
 {
-	std::ifstream inputStream(SEED_FILE);
+	std::ifstream inputStream(kSeedFile);
 
 	if (!inputStream)
 	{
-		std::cout << "Error: seed file can't be opened: " << SEED_FILE << "\n";
+		std::cout << "Error: seed file can't be opened: " << kSeedFile << "\n";
 		std::cout << "Press enter to exit.";
 		std::cin.get();
 		std::exit(EExitCodes::SeedFileFail);
@@ -192,28 +166,69 @@ int64_t GetSeed(const std::string& SEED_FILE = "seed.txt")
 }
 
 // Initialise the pseudo-random generator with a seed.
-bool SetUpRandom()
+bool CMonopolish::SetUpRandom()
 {
 	std::srand(static_cast<unsigned int>(GetSeed()));
 	return true;
 }
 
-bool PrintWelcomeMessage()
+bool CMonopolish::PrintWelcomeMessage()
 {
 	const std::string kMsg = "Welcome to Monopol-ish";
 	std::cout << kMsg << "\n";
 	return true;
 }
 
+bool CMonopolish::PlayGame()
+{
+	for (int32_t round = 0; round < kROUNDS_TO_PLAY; round++)
+	{
+		// Player rolls number here
+		for (int16_t playerIndex = 0; playerIndex < mPlayers.size(); playerIndex++)
+		{
+			
+			const uint32_t kPlayerRoll = mPlayers.at(playerIndex)->RollNumber();
+			std::cout << mPlayers.at(playerIndex)->GetName() << " rolls " << kPlayerRoll << std::endl;
+			mPlayers.at(playerIndex)->MoveForward(kPlayerRoll);
+			//mSquares.at(mPlayers.at(playerIndex)->GetPosition())->LandOnSquare(std::move(mPlayers.at(playerIndex)));*/
+		}
+	}
+
+	std::cout << "Game Over\n";
+	for (int16_t i = 0; i < mPlayers.size(); i++)
+	{
+		std::cout << mPlayers.at(i)->GetName() << " has " << kPOUND_SIGN << mPlayers.at(i)->GetMoney() << "\n";
+	}
+	std::cout << GetWinningPlayer() << " wins." << std::endl;
+
+	return true;
+}
+
+std::string CMonopolish::GetWinningPlayer() const
+{
+	int64_t currentMax = mPlayers.at(0)->GetMoney();
+	std::string winningPlayer = mPlayers.at(0)->GetName();
+
+	for (int16_t i = 1; i < mPlayers.size(); i++)
+	{
+		if (mPlayers.at(i)->GetMoney() > currentMax)
+		{
+			currentMax = mPlayers.at(i)->GetMoney();
+			winningPlayer = mPlayers.at(i)->GetName();
+		}
+	}
+
+	return winningPlayer;
+}
+
 bool CMonopolish::StartGame()
 {
 	PrintWelcomeMessage();
 	SetUpRandom();
-	std::vector<std::unique_ptr<CSquare>> squares(kNUMBER_OF_SQUARES);
-	LoadSquares("monopoly.txt");
+	LoadSquares();
+	SetUpPlayers();
 
-	//SetUpPlayers();
-
+	PlayGame();
 
 	return true;
 }

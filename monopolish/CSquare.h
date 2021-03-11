@@ -14,7 +14,7 @@ using GlobalConstants::ESquareType;
 
 class CSquare
 {
-protected:
+private:
 	ESquareType mType = ESquareType::None;
 	std::string mName = "";
 	int32_t mCost = 0;
