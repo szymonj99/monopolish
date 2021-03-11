@@ -45,7 +45,10 @@
     <ClCompile Include="CSquareGoToJail.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ISquare.cpp">
+    <ClCompile Include="CSquareGo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSquare.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,7 +80,10 @@
     <ClInclude Include="CSquareGoToJail.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ISquare.h">
+    <ClInclude Include="CSquareGo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSquare.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

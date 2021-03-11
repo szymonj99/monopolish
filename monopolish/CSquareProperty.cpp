@@ -1,75 +1,78 @@
 // Szymon Janusz G20792986
 
+// Disable warning about using enum class over enum.
+#pragma warning(disable: 26812)
+
 #include "CSquareProperty.h"
 
-CSquareProperty::CSquareProperty(const std::string& kName, const int32_t kCost, const int32_t kRent, const ESquareColour kColour)
+CSquareProperty::CSquareProperty(const ESquareType kType, const std::string& kName, const int32_t kCost, const int32_t kRent, const ESquareColour kColour)
 {
-	mName = kName;
-	mCost = kCost;
-	mRent = kRent;
-	mColour = kColour;
+	this->mType = kType;
+	//mType = kType;
+	//mName = kName;
+	//mCost = kCost;
+	//mRent = kRent;
+	//mColour = kColour;
 }
 
-const std::string& CSquareProperty::GetName() const
+bool CSquareProperty::LandOnSquare(std::unique_ptr<CPlayer> player)
 {
-	return mName;
-}
-
-const bool CSquareProperty::SetName(const std::string& kName)
-{
-	mName = kName;
 	return true;
 }
 
-const int32_t CSquareProperty::GetCost() const
-{
-	return mCost;
-}
+//int32_t CSquareProperty::GetCost() const
+//{
+//	return mCost;
+//}
 
-const bool CSquareProperty::SetCost(const int32_t kCost)
-{
-	mCost = kCost;
-	return true;
-}
+//bool CSquareProperty::SetCost(const int32_t kCost)
+//{
+//	mCost = kCost;
+//	return true;
+//}
+//
+//int32_t CSquareProperty::GetRent() const
+//{
+//	return mRent;
+//}
+//
+//bool CSquareProperty::SetRent(const int32_t kRent)
+//{
+//	mRent = kRent;
+//	return true;
+//}
+//
+//ESquareColour CSquareProperty::GetSquareColour() const
+//{
+//	return mColour;
+//}
+//
+//bool CSquareProperty::SetSquareColour(const ESquareColour kColour)
+//{
+//	mColour = kColour;
+//	return true;
+//}
+//
+//std::shared_ptr<CPlayer> CSquareProperty::GetPropertyOwner() const
+//{
+//	return mOwner;
+//}
+//
+//bool CSquareProperty::SetPropertyOwner(const std::shared_ptr<CPlayer> player)
+//{
+//	mOwner = player;
+//	return true;
+//}
+//
+//bool CSquareProperty::IsOwnedByPlayer(const std::shared_ptr<CPlayer> player)
+//{
+//	return mOwner == player;
+//}
 
-const int32_t CSquareProperty::GetRent() const
-{
-	return mRent;
-}
-
-const bool CSquareProperty::SetRent(const int32_t kRent)
-{
-	mRent = kRent;
-	return true;
-}
-
-const ESquareColour CSquareProperty::GetSquareColour() const
-{
-	return mColour;
-}
-
-const bool CSquareProperty::SetSquareColour(const ESquareColour kColour)
-{
-	mColour = kColour;
-	return true;
-}
-
-const std::shared_ptr<CPlayer> CSquareProperty::GetPropertyOwner() const
-{
-	return mOwner;
-}
-
-const bool CSquareProperty::SetPropertyOwner(const std::shared_ptr<CPlayer> player)
-{
-	mOwner = player;
-	return true;
-}
-
-const bool CSquareProperty::IsOwnedByPlayer(const std::shared_ptr<CPlayer> player)
-{
-	return mOwner == player;
-}
-
+//bool CSquareProperty::LandOnSquare(std::unique_ptr<CPlayer> player)
+//{
+//	return true;
+//}
 
 //const bool CSquareProperty::LandOnSquare(std::unique_ptr<CPlayer> player)
 //{

@@ -22,7 +22,8 @@ namespace GlobalConstants
 		Penalty,
 		Jail,
 		GoToParking,
-		FreeParking
+		FreeParking,
+		None
 	};
 
 	enum ESquareColour
@@ -45,7 +46,8 @@ namespace GlobalConstants
 		SecondName,
 		Cost,
 		Rent,
-		ColourGroup
+		ColourGroup,
+		ThirdName = 3 // Used for "Go to Jail"
 	};
 
 	const int32_t kGO_COLLECTION = 200;

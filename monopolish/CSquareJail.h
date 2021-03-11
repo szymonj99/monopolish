@@ -1,9 +1,9 @@
 // Szymon Janusz G20792986
 
 #pragma once
-#include "ISquare.h"
+#include "CSquare.h"
 
-class CSquareJail : public ISquare
+class CSquareJail : protected CSquare
 {
 };
 

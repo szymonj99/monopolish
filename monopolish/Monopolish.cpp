@@ -1,5 +1,8 @@
 // Szymon Janusz G20792986
 
+// Disable warning about using enum class over enum.
+#pragma warning(disable: 26812)
+
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>

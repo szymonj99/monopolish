@@ -6,10 +6,10 @@
 class CPiece
 {
 private:
-	std::string mName = "";
+	std::string mName;
 
 public:
-	const std::string& GetName() const;
-	const bool SetName(const std::string& kName);
+	std::string GetName() const;
+	bool SetName(const std::string& kName);
 };
 

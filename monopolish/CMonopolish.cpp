@@ -1,9 +1,12 @@
 // Szymon Janusz G20792986
 
-#include <sstream>
+// Disable warning about using enum class over enum.
+#pragma warning(disable: 26812)
 
+#include <sstream>
 #include "CMonopolish.h"
 #include "CSquareProperty.h"
+#include "CSquareGo.h"
 #include "CSquareFreeParking.h"
 #include "CSquareJail.h"
 #include "Constants.h"
@@ -15,7 +18,7 @@ using GlobalConstants::EExitCodes;
 using GlobalConstants::ESquareIndexes;
 using GlobalConstants::kNUMBER_OF_SQUARES;
 
-std::vector<std::unique_ptr<ISquare>> CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
+bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 {
 	std::ifstream inputStream(kFileName);
 
@@ -27,8 +30,10 @@ std::vector<std::unique_ptr<ISquare>> CMonopolish::LoadSquares(const std::string
 		std::exit(EExitCodes::LevelFileFail);
 	}
 
-	std::vector<std::unique_ptr<ISquare>> squares;
-	squares.reserve(kNUMBER_OF_SQUARES);
+	// Make sure we have enough memory in the vector
+	// To prevent copying multiple objects repeatedly
+	//mSquares = std::vector<std::unique_ptr<CSquare>>(kNUMBER_OF_SQUARES);
+	mSquares.reserve(kNUMBER_OF_SQUARES);
 
 	// Read every line, then parse it.
 	std::string currentLine;
@@ -44,6 +49,7 @@ std::vector<std::unique_ptr<ISquare>> CMonopolish::LoadSquares(const std::string
 		}
 		
 		int32_t currentSquareType = static_cast<int32_t>(std::stoi(lineMembers.at(ESquareIndexes::Type)));
+		const ESquareType kType = static_cast<ESquareType>(currentSquareType);
 		// Parse the current square type to int
 		switch (currentSquareType)
 		{
@@ -54,9 +60,46 @@ std::vector<std::unique_ptr<ISquare>> CMonopolish::LoadSquares(const std::string
 			const int32_t kRent = static_cast<int32_t>(std::stoi(lineMembers.at(ESquareIndexes::Rent)));
 			const ESquareColour kColour = static_cast<ESquareColour>(std::stoi(lineMembers.at(ESquareIndexes::ColourGroup)));
 
-			std::unique_ptr<ISquare> prop = std::make_unique<CSquareProperty>(kName, kCost, kRent, kColour);
-			//squares.push_back(prop);
+			//auto test = std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour);
 
+			CSquareProperty* test = new CSquareProperty();
+
+			//mSquares.emplace_back(std::make_unique<CSquareProperty>(kType, kName, kCost, kRent, kColour));
+
+			//mSquares.emplace_back(std::move(test));
+			//mSquares.emplace_back(std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour));
+
+			//mSquares.emplace_back(new CSquareProperty(kType, kName, kCost, kRent, kColour));
+
+			//auto test2 = std::make_unique<CSquareProperty>();
+			//test->2
+
+			//squares.push_back(std::move(test));
+			//squares.emplace_back(std::move(test));
+
+			//std::unique_ptr<CSquare> test2 = std::make_unique<CSquareProperty>(kType, kName, kCost, kRent, kColour);
+
+			//squares.push_back(std::move(test));
+
+			//squares.
+			//test->GetCost();
+
+			//squares.emplace_back(std::move(test));
+
+			//squares.emplace_back(new CSquareProperty(kType, kName, kCost, kRent, kColour));
+			//squares.push_back(std::move(test));
+
+			//squares.emplace_back(std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour));
+
+			//squares.push_back(test);
+
+			//squares.emplace_back(new CSquareProperty(kType, kName, kCost, kRent, kColour));
+			break;
+		}
+		case ESquareType::Go:
+		{
+			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+			//squares.emplace_back(new CSquareGo(kType, kName));
 			break;
 		}
 		default:
@@ -66,8 +109,6 @@ std::vector<std::unique_ptr<ISquare>> CMonopolish::LoadSquares(const std::string
 		}
 		}
 	}
-
-
 
 	//while (!inputStream.eof())
 	//{
@@ -129,11 +170,11 @@ std::vector<std::unique_ptr<ISquare>> CMonopolish::LoadSquares(const std::string
 	//	squares.emplace_back(std::make_unique<CSquare>("Test"));
 	//}
 
-	return squares;
+	return true;
 }
 
 // Read the seed (first item) in from file.
-const int64_t GetSeed(const std::string& SEED_FILE = "seed.txt")
+int64_t GetSeed(const std::string& SEED_FILE = "seed.txt")
 {
 	std::ifstream inputStream(SEED_FILE);
 
@@ -151,24 +192,25 @@ const int64_t GetSeed(const std::string& SEED_FILE = "seed.txt")
 }
 
 // Initialise the pseudo-random generator with a seed.
-const bool SetUpRandom()
+bool SetUpRandom()
 {
 	std::srand(static_cast<unsigned int>(GetSeed()));
 	return true;
 }
 
-const bool PrintWelcomeMessage()
+bool PrintWelcomeMessage()
 {
 	const std::string kMsg = "Welcome to Monopol-ish";
 	std::cout << kMsg << "\n";
 	return true;
 }
 
-const bool CMonopolish::StartGame()
+bool CMonopolish::StartGame()
 {
 	PrintWelcomeMessage();
 	SetUpRandom();
-	auto squares = LoadSquares();
+	std::vector<std::unique_ptr<CSquare>> squares(kNUMBER_OF_SQUARES);
+	LoadSquares("monopoly.txt");
 
 	//SetUpPlayers();
 

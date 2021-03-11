@@ -7,15 +7,16 @@
 #include <fstream>
 #include <string>
 
-#include "ISquare.h"
+#include "CSquare.h"
 #include "Constants.h"
 
 class CMonopolish
 {
 private:
 	int32_t mCurrentRound = 0;
+	std::vector<std::shared_ptr<CSquare>> mSquares;
 
 public:
-	const bool StartGame();
-	std::vector<std::unique_ptr<ISquare>> LoadSquares(const std::string& kFileName);
+	bool StartGame();
+	bool LoadSquares(const std::string& kFileName);
 };
