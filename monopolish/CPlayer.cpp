@@ -40,7 +40,7 @@ bool CPlayer::MoveForward(const uint32_t kRoll)
 	mPosition += kRoll;
 	if (!(mPosition < GlobalConstants::kNUMBER_OF_SQUARES))
 	{
-		const int32_t kNewPosition = (GlobalConstants::kNUMBER_OF_SQUARES - 1) - mPosition;
+		const int32_t kNewPosition = mPosition - (GlobalConstants::kNUMBER_OF_SQUARES - 1);
 		PassGo(kNewPosition);
 	}
 	return true;
@@ -54,4 +54,31 @@ int32_t CPlayer::GetPosition() const
 int64_t CPlayer::GetMoney() const
 {
 	return mMoney;
+}
+
+bool CPlayer::SubtractMoney(const int64_t kMoney)
+{
+	mMoney -= kMoney;
+	return true;
+}
+
+bool CPlayer::AddMoney(const int64_t kMoney)
+{
+	mMoney += kMoney;
+	return true;
+}
+
+bool CPlayer::SetPosition(const int32_t kPosition)
+{
+	mPosition = kPosition;
+	return true;
+}
+
+bool CPlayer::GoToJail()
+{
+	// Change this to a meaningful number rather than hard-coded 6.
+	const int32_t kJailPosition = 6;
+	// How do I get the jail index?
+	SetPosition(kJailPosition);
+	return true;
 }

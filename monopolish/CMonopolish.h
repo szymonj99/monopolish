@@ -15,7 +15,8 @@ class CMonopolish
 private:
 	int32_t mCurrentRound = 0;
 	std::vector<std::unique_ptr<CSquare>> mSquares;
-	std::vector<std::unique_ptr<CPlayer>> mPlayers;
+	std::vector<std::shared_ptr<CPlayer>> mPlayers;
+	int32_t mJailPosition;
 
 public:
 	bool PrintWelcomeMessage();

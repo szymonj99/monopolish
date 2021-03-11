@@ -20,6 +20,6 @@ public:
 	//bool SetPropertyOwner(std::shared_ptr<CPlayer> player);
 	//bool IsOwnedByPlayer(const std::shared_ptr<CPlayer> player);
 
-	bool LandOnSquare(std::unique_ptr<CPlayer> player);
+	bool LandOnSquare(std::shared_ptr<CPlayer> player);
 };
 

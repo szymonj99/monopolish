@@ -79,7 +79,7 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 		}
 		case ESquareType::Station:
 		{
-			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+			const std::string kName = lineMembers.at(ESquareIndexes::FirstName) + " " + lineMembers.at(ESquareIndexes::SecondName);
 
 			mSquares.emplace_back(std::make_unique<CSquareStation>(kType, kName));
 			break;
@@ -181,16 +181,16 @@ bool CMonopolish::PrintWelcomeMessage()
 
 bool CMonopolish::PlayGame()
 {
-	for (int32_t round = 0; round < kROUNDS_TO_PLAY; round++)
+	for (mCurrentRound = 0; mCurrentRound < kROUNDS_TO_PLAY; mCurrentRound++)
 	{
 		// Player rolls number here
 		for (int16_t playerIndex = 0; playerIndex < mPlayers.size(); playerIndex++)
-		{
-			
+		{			
 			const uint32_t kPlayerRoll = mPlayers.at(playerIndex)->RollNumber();
 			std::cout << mPlayers.at(playerIndex)->GetName() << " rolls " << kPlayerRoll << std::endl;
 			mPlayers.at(playerIndex)->MoveForward(kPlayerRoll);
-			//mSquares.at(mPlayers.at(playerIndex)->GetPosition())->LandOnSquare(std::move(mPlayers.at(playerIndex)));*/
+			mSquares.at(mPlayers.at(playerIndex)->GetPosition())->LandOnSquare(mPlayers.at(playerIndex));
+			std::cout << mPlayers.at(playerIndex)->GetName() << " has " << kPOUND_SIGN << mPlayers.at(playerIndex)->GetMoney() << std::endl;
 		}
 	}
 

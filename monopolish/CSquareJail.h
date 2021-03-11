@@ -7,5 +7,5 @@ class CSquareJail : public CSquare
 {
 public:
 	CSquareJail(const ESquareType kType, const std::string& kName);
-	bool LandOnSquare(std::unique_ptr<CPlayer> player);
+	bool LandOnSquare(std::shared_ptr<CPlayer> player);
 };

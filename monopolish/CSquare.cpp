@@ -96,7 +96,7 @@ bool CSquare::IsOwnedByPlayer(const std::shared_ptr<CPlayer> player)
 	return mOwner == player;
 }
 
-bool CSquare::LandOnSquare(std::unique_ptr<CPlayer> player)
+bool CSquare::LandOnSquare(std::shared_ptr<CPlayer> player)
 {
 	std::cout << player->GetName() << " lands on " << mName << std::endl;
 	return true;

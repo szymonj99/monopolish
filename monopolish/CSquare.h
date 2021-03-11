@@ -54,5 +54,5 @@ public:
 	// Returns true if the current square is owned by the player.
 	bool IsOwnedByPlayer(const std::shared_ptr<CPlayer> player);
 	//// Perform actions when landing on the current square.
-	virtual bool LandOnSquare(std::unique_ptr<CPlayer> player) = 0;
+	virtual bool LandOnSquare(std::shared_ptr<CPlayer> player) = 0;
 };

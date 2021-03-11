@@ -5,6 +5,9 @@
 #include <memory>
 #include "CPiece.h"
 #include "random.h"
+#include "Constants.h"
+
+using GlobalConstants::ESquareColour;
 
 class CPlayer
 {
@@ -27,4 +30,7 @@ public:
 	bool MoveForward(const uint32_t kRoll);
 	int32_t GetPosition() const;
 	bool PassGo(const int32_t kNewPosition);
+	bool SetPosition(const int32_t kPosition);
+	bool GoToJail();
+	bool OwnsAllPropertiesOfColour(const ESquareColour kColour) const;
 };

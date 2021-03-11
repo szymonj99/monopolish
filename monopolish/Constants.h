@@ -57,4 +57,7 @@ namespace GlobalConstants
 	const char kPOUND_SIGN = 156; // 156 or 35 or 163
 	const int32_t kROUNDS_TO_PLAY = 20;
 	const int32_t kNUMBER_OF_SQUARES = 26;
+	const int32_t kJAIL_PRICE = 50;
+	const int32_t kSTATION_TICKET_PRICE = 10;
+	const int32_t kSTATION_PRICE = 200;
 }

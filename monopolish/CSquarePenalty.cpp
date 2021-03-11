@@ -11,7 +11,17 @@ CSquarePenalty::CSquarePenalty(const ESquareType kType, const std::string& kName
 	SetName(kName);
 }
 
-bool CSquarePenalty::LandOnSquare(std::unique_ptr<CPlayer> player)
+bool CSquarePenalty::LandOnSquare(std::shared_ptr<CPlayer> player)
 {
+	std::cout << player->GetName() << " lands on " << GetName() << std::endl;
+	auto penalty = GetPenalty(Random() - 1); 
+	std::cout << penalty.first << " Lose " << GlobalConstants::kPOUND_SIGN << penalty.second << std::endl;
+	player->SubtractMoney(penalty.second);
 	return true;
+}
+
+std::pair<std::string, int32_t> CSquarePenalty::GetPenalty(const int32_t kRoll) const
+{
+	// We roll 1 -6, indexes go from 0 - 5.
+	return mPenalties.at(kRoll - 1);
 }
