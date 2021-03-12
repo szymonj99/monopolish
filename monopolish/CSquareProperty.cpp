@@ -22,6 +22,7 @@ bool CSquareProperty::LandOnSquare(std::shared_ptr<CPlayer> player)
 	if (GetPropertyOwner() == nullptr && player->GetMoney() > 0)
 	{
 		SetPropertyOwner(player);
+		//player->AddProperty(this);
 		player->SubtractMoney(GetCost());
 		std::cout << player->GetName() << " buys " << GetName() << " for " << GlobalConstants::kPOUND_SIGN << GetCost() << std::endl;
 	}
@@ -32,7 +33,17 @@ bool CSquareProperty::LandOnSquare(std::shared_ptr<CPlayer> player)
 		player->SubtractMoney(GetRent());
 		GetPropertyOwner()->AddMoney(GetRent());
 		std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GetRent() << std::endl;
-	}	
+
+		////if (kGameManager.PlayerOwnsAllPropertyOfColour(player, GetSquareColour()))
+		//{
+		//	player->SubtractMoney(GetRent() * 2);
+		//	GetPropertyOwner()->AddMoney(GetRent() * 2);
+		//	std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GetRent() * 2<< std::endl;
+		//}
+		//else
+		//{
+		//	}		
+	}
 	
 	return true;
 }

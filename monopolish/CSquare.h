@@ -26,7 +26,6 @@ public:
 	CSquare() {};
 	CSquare(const ESquareType kType, const std::string& kName, const int32_t kCost, const int32_t kRent, const ESquareColour kColour);
 	~CSquare() {};
-	//CSquare(const ESquareType kType, const std::string& kName);
 	// Set the square's type.
 	bool SetType(const ESquareType kType);
 	// Set the square's type.
@@ -53,6 +52,6 @@ public:
 	bool SetPropertyOwner(std::shared_ptr<CPlayer> player);
 	// Returns true if the current square is owned by the player.
 	bool IsOwnedByPlayer(const std::shared_ptr<CPlayer> player);
-	//// Perform actions when landing on the current square.
+	// Perform actions when landing on the current square.
 	virtual bool LandOnSquare(std::shared_ptr<CPlayer> player) = 0;
 };

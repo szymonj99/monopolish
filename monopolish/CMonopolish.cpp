@@ -24,6 +24,7 @@ using GlobalConstants::kNUMBER_OF_SQUARES;
 using GlobalConstants::kROUNDS_TO_PLAY;
 using GlobalConstants::kPOUND_SIGN;
 
+// Set up the member vector variable that stores the squares.
 bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 {
 	std::ifstream inputStream(kFileName);
@@ -67,42 +68,42 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 			const int32_t kRent = static_cast<int32_t>(std::stoi(lineMembers.at(ESquareIndexes::Rent)));
 			const ESquareColour kColour = static_cast<ESquareColour>(std::stoi(lineMembers.at(ESquareIndexes::ColourGroup)));
 		
-			mSquares.emplace_back(std::make_unique<CSquareProperty>(kType, kName, kCost, kRent, kColour));
+			mSquares.emplace_back(std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour));
 			break;
 		}
 		case ESquareType::Go:
 		{
 			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
 
-			mSquares.emplace_back(std::make_unique<CSquareGo>(kType, kName));
+			mSquares.emplace_back(std::make_shared<CSquareGo>(kType, kName));
 			break;
 		}
 		case ESquareType::Station:
 		{
 			const std::string kName = lineMembers.at(ESquareIndexes::FirstName) + " " + lineMembers.at(ESquareIndexes::SecondName);
 
-			mSquares.emplace_back(std::make_unique<CSquareStation>(kType, kName));
+			mSquares.emplace_back(std::make_shared<CSquareStation>(kType, kName));
 			break;
 		}
 		case ESquareType::Bonus:
 		{
 			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
 
-			mSquares.emplace_back(std::make_unique<CSquareBonus>(kType, kName));
+			mSquares.emplace_back(std::make_shared<CSquareBonus>(kType, kName));
 			break;
 		}
 		case ESquareType::Penalty:
 		{
 			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
 
-			mSquares.emplace_back(std::make_unique<CSquarePenalty>(kType, kName));
+			mSquares.emplace_back(std::make_shared<CSquarePenalty>(kType, kName));
 			break;
 		}
 		case ESquareType::Jail:
 		{
 			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
 
-			mSquares.emplace_back(std::make_unique<CSquareJail>(kType, kName));
+			mSquares.emplace_back(std::make_shared<CSquareJail>(kType, kName));
 			break;
 		}
 		case ESquareType::GoToJail:
@@ -112,7 +113,7 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 				lineMembers.at(ESquareIndexes::SecondName) + " " +
 				lineMembers.at(ESquareIndexes::ThirdName);
 
-			mSquares.emplace_back(std::make_unique<CSquareGoToJail>(kType, kName));
+			mSquares.emplace_back(std::make_shared<CSquareGoToJail>(kType, kName));
 			break;
 		}
 		case ESquareType::FreeParking:
@@ -121,7 +122,7 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 				lineMembers.at(ESquareIndexes::FirstName) + " " +
 				lineMembers.at(ESquareIndexes::SecondName);
 
-			mSquares.emplace_back(std::make_unique<CSquareFreeParking>(kType, kName));
+			mSquares.emplace_back(std::make_shared<CSquareFreeParking>(kType, kName));
 			break;
 		}
 		default:
@@ -137,6 +138,7 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 	return true;
 }
 
+// Set up the member vector variable that stores the players.
 bool CMonopolish::SetUpPlayers()
 {
 	mPlayers.clear();
@@ -172,6 +174,7 @@ bool CMonopolish::SetUpRandom()
 	return true;
 }
 
+// Print the welcome message the user sees at the beginning of the game.
 bool CMonopolish::PrintWelcomeMessage()
 {
 	const std::string kMsg = "Welcome to Monopol-ish";
@@ -179,13 +182,14 @@ bool CMonopolish::PrintWelcomeMessage()
 	return true;
 }
 
+// Play the game.
 bool CMonopolish::PlayGame()
 {
 	for (mCurrentRound = 0; mCurrentRound < kROUNDS_TO_PLAY; mCurrentRound++)
 	{
 		// Player rolls number here
 		for (int16_t playerIndex = 0; playerIndex < mPlayers.size(); playerIndex++)
-		{			
+		{
 			const uint32_t kPlayerRoll = mPlayers.at(playerIndex)->RollNumber();
 			std::cout << mPlayers.at(playerIndex)->GetName() << " rolls " << kPlayerRoll << std::endl;
 			mPlayers.at(playerIndex)->MoveForward(kPlayerRoll);
@@ -204,6 +208,7 @@ bool CMonopolish::PlayGame()
 	return true;
 }
 
+// Get the name of the winning player (Player with the most money).
 std::string CMonopolish::GetWinningPlayer() const
 {
 	int64_t currentMax = mPlayers.at(0)->GetMoney();
@@ -221,6 +226,7 @@ std::string CMonopolish::GetWinningPlayer() const
 	return winningPlayer;
 }
 
+// Set up the game and play until game is over.
 bool CMonopolish::StartGame()
 {
 	PrintWelcomeMessage();

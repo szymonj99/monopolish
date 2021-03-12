@@ -5,13 +5,6 @@
 
 #include "CSquare.h"
 
-// Create a generic Square object with a name and type.
-//CSquare::CSquare(const ESquareType kType, const std::string& kName)
-//{
-//	mType = kType;
-//	mName = kName;	
-//}
-
 CSquare::CSquare(const ESquareType kType, const std::string& kName, const int32_t kCost, const int32_t kRent, const ESquareColour kColour)
 {
 	mType = kType;
@@ -101,19 +94,3 @@ bool CSquare::LandOnSquare(std::shared_ptr<CPlayer> player)
 	std::cout << player->GetName() << " lands on " << mName << std::endl;
 	return true;
 }
-
-//const bool CSquare::LandOnSquare(std::unique_ptr<CPlayer> player)
-//{
-//	// If !propertyOwned
-//	// player.buyProperty(this);
-//	// Either tryBuyProperty(this), where TryBuyProperty checks player's funds
-//	// Or check player funds here, and only then BuyProperty;
-//	// 
-//
-//	// If PropertyOwnedByPlayer(player)
-//	// nothing happens
-//
-//	// If PropertyOwnedButNotByPlayer(player)
-//	// player.PayRentToPlayer(this.GetOwnerPtr());
-//	return true;
-//}
