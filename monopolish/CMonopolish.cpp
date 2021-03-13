@@ -190,7 +190,7 @@ bool CMonopolish::PlayGame()
 		// Player rolls number here
 		for (int16_t playerIndex = 0; playerIndex < mPlayers.size(); playerIndex++)
 		{
-			const uint32_t kPlayerRoll = mPlayers.at(playerIndex)->RollNumber();
+			const auto kPlayerRoll = mPlayers.at(playerIndex)->RollNumber();
 			std::cout << mPlayers.at(playerIndex)->GetName() << " rolls " << kPlayerRoll << std::endl;
 			mPlayers.at(playerIndex)->MoveForward(kPlayerRoll);
 			mSquares.at(mPlayers.at(playerIndex)->GetPosition())->LandOnSquare(mPlayers.at(playerIndex));
@@ -211,7 +211,7 @@ bool CMonopolish::PlayGame()
 // Get the name of the winning player (Player with the most money).
 std::string CMonopolish::GetWinningPlayer() const
 {
-	int64_t currentMax = mPlayers.at(0)->GetMoney();
+	auto currentMax = mPlayers.at(0)->GetMoney();
 	std::string winningPlayer = mPlayers.at(0)->GetName();
 
 	for (int16_t i = 1; i < mPlayers.size(); i++)

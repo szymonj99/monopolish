@@ -40,7 +40,7 @@ bool CPlayer::MoveForward(const uint32_t kRoll)
 	mPosition += kRoll;
 	if (!(mPosition < GlobalConstants::kNUMBER_OF_SQUARES))
 	{
-		const int32_t kNewPosition = mPosition - (GlobalConstants::kNUMBER_OF_SQUARES - 1);
+		const int32_t kNewPosition = mPosition % (GlobalConstants::kNUMBER_OF_SQUARES - 1);
 		PassGo(kNewPosition);
 	}
 	return true;

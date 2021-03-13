@@ -172,6 +172,7 @@
     <ClInclude Include="CSquareProperty.h" />
     <ClInclude Include="CSquareStation.h" />
     <ClInclude Include="CTimer.h" />
+    <ClInclude Include="MyTypeDefs.h" />
     <ClInclude Include="random.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
