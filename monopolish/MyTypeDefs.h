@@ -29,6 +29,7 @@ namespace MyTypes
 	typedef uint32_t Roll_T;
 	typedef int32_t Rent_T;
 	typedef int32_t Cost_T;
+	typedef int32_t RoundsNum_T;
 
 	// Timer things.
 	typedef std::chrono::time_point<std::chrono::high_resolution_clock> TimePoint_T;

@@ -19,11 +19,11 @@ CTimer::~CTimer()
 	mDuration = mEnd - mStart;
 
 	// Get duration value in milliseconds
-	constexpr float MILLISECONDS = 1000.0f;
-	if (mInfo == "")
+	constexpr float kMilliseconds = 1000.0f;
+	if (!mInfo.empty())
 	{
-		std::cout << mDuration.count() * MILLISECONDS << "\n";
+		std::cout << mDuration.count() * kMilliseconds << "\n";
 		return;
 	}
-	std::cout << mInfo << " took " << mDuration.count() * MILLISECONDS << " ms.\n";
+	std::cout << mInfo << " took " << mDuration.count() * kMilliseconds << " ms.\n";
 }
