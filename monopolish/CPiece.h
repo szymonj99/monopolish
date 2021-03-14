@@ -6,7 +6,7 @@
 class CPiece
 {
 private:
-	std::string mName = "";
+	std::string mName;
 
 public:
 	CPiece(const std::string& kName);

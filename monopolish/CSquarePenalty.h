@@ -10,7 +10,9 @@
 class CSquarePenalty : public CSquare
 {
 private:
-	std::vector<std::pair<std::string, int32_t>> mPenalties =
+	using mPenaltiesVector_T = std::vector<std::pair<std::string, int32_t>>;
+	using mPenalty_T = std::pair<std::string, int32_t>;
+	mPenaltiesVector_T mPenalties =
 	{
 		{"Buy a coffee in Starbucks.", 20},
 		{"Pay your broadband bill.", 50},
@@ -23,6 +25,6 @@ private:
 public: 
 	CSquarePenalty(const ESquareType kType, const std::string& kName);
 	bool LandOnSquare(std::shared_ptr<CPlayer> player);
-	std::pair<std::string, int32_t> GetPenalty(const int32_t kRoll) const;
+	mPenalty_T GetPenalty(const int32_t kRoll) const;
 };
 

@@ -10,7 +10,9 @@
 class CSquareBonus : public CSquare
 {
 private:
-	std::vector<std::pair<std::string, int32_t>> mBonuses = 
+	using mBonusesVector_T = std::vector<std::pair<std::string, int32_t>>;
+	using mBonus_T = std::pair<std::string, int32_t>;
+	mBonusesVector_T mBonuses = 
 	{
 		{"Find Some money.", 20},
 		{"Win a coding competition.", 50},
@@ -23,6 +25,6 @@ private:
 public:
 	CSquareBonus(const ESquareType kType, const std::string& kName);
 	bool LandOnSquare(std::shared_ptr<CPlayer> player);
-	std::pair<std::string, int32_t> GetBonus(const int32_t kRoll) const;
+	mBonus_T GetBonus(const int32_t kRoll) const;
 };
 

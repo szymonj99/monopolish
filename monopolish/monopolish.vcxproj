@@ -153,7 +153,6 @@
     <ClCompile Include="CSquarePenalty.cpp" />
     <ClCompile Include="CSquareProperty.cpp" />
     <ClCompile Include="CSquareStation.cpp" />
-    <ClCompile Include="CTimer.cpp" />
     <ClCompile Include="Monopolish.cpp" />
     <ClCompile Include="random.cpp" />
   </ItemGroup>
@@ -171,8 +170,6 @@
     <ClInclude Include="CSquarePenalty.h" />
     <ClInclude Include="CSquareProperty.h" />
     <ClInclude Include="CSquareStation.h" />
-    <ClInclude Include="CTimer.h" />
-    <ClInclude Include="MyTypeDefs.h" />
     <ClInclude Include="random.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

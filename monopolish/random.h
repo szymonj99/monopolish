@@ -3,5 +3,6 @@
 #pragma once
 
 #include <iostream>
+#include "random.h"
 
 const uint32_t Random();

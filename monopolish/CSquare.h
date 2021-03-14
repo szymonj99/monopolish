@@ -12,11 +12,13 @@
 using GlobalConstants::ESquareColour;
 using GlobalConstants::ESquareType;
 
+class CPlayer;
+
 class CSquare
 {
 private:
 	ESquareType mType = ESquareType::None;
-	std::string mName = "";
+	std::string mName;
 	int32_t mCost = 0;
 	int32_t mRent = 0;
 	ESquareColour mColour = ESquareColour::NONE;

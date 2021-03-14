@@ -30,9 +30,6 @@
     <ClCompile Include="CPiece.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CTimer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CSquareJail.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,9 +71,6 @@
     <ClInclude Include="CPiece.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CTimer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CSquareJail.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -105,9 +99,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="random.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MyTypeDefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

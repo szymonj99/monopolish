@@ -13,9 +13,11 @@
 class CMonopolish
 {
 private:
+	using mSquaresVector_T = std::vector<std::shared_ptr<CSquare>>;
+	using mPlayersVector_T = std::vector<std::shared_ptr<CPlayer>>;
 	int32_t mCurrentRound = 0;
-	std::vector<std::shared_ptr<CSquare>> mSquares;
-	std::vector<std::shared_ptr<CPlayer>> mPlayers;
+	mSquaresVector_T mSquares;
+	mPlayersVector_T mPlayers;
 
 public:
 	bool PrintWelcomeMessage();

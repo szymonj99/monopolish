@@ -20,7 +20,7 @@ bool CSquarePenalty::LandOnSquare(std::shared_ptr<CPlayer> player)
 	return true;
 }
 
-std::pair<std::string, int32_t> CSquarePenalty::GetPenalty(const int32_t kRoll) const
+CSquarePenalty::mPenalty_T CSquarePenalty::GetPenalty(const int32_t kRoll) const
 {
 	// We roll 1 - 6, indexes go from 0 - 5.
 	return mPenalties.at(kRoll - 1);
