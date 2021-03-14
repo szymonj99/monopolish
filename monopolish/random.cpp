@@ -1,6 +1,6 @@
 // Szymon Janusz G20792986
 
-#include <iostream>
+#include "random.h"
 
 // Return a random number from 1 to 6.
 const uint32_t Random()
