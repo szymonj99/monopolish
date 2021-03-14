@@ -5,11 +5,13 @@
 #include <chrono>
 #include <string>
 
+#include "MyTypeDefs.h"
+
 class CTimer
 {
 private:
-	std::chrono::time_point<std::chrono::high_resolution_clock> mStart, mEnd;
-	std::chrono::duration<float> mDuration;
+	MyTypes::TimePoint_T mStart, mEnd;
+	MyTypes::Duration_T mDuration;
 	std::string mInfo;
 
 public:

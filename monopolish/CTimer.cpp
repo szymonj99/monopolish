@@ -20,7 +20,7 @@ CTimer::~CTimer()
 
 	// Get duration value in milliseconds
 	constexpr float kMilliseconds = 1000.0f;
-	if (!mInfo.empty())
+	if (mInfo.empty())
 	{
 		std::cout << mDuration.count() * kMilliseconds << "\n";
 		return;
