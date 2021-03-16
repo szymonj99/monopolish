@@ -19,5 +19,5 @@ int main()
 	_CrtDumpMemoryLeaks();
 	std::cout << "Program execution finished. Press enter to exit.\n";
 	std::cin.get();
-	return GlobalConstants::EExitCodes::SuccessFinish;
+	return (int32_t)GlobalConstants::EExitCodes::SuccessFinish;
 }

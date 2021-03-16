@@ -13,15 +13,10 @@
 class CMonopolish
 {
 private:
-	// Vector of vectors.
-	// First vector contains vectors of coloured properties.
-	// EG. Vector{Red Properties{Red Road, Red Street}, Yellow Properties{Yellow Road, Yellow Street}} 
-	using mVectorOfSquareVectors_T = std::vector<std::vector<std::shared_ptr<CSquare>>>;
-	
-	using mSquaresVector_T = std::vector<std::shared_ptr<CSquare>>;
-	using mPlayersVector_T = std::vector<std::shared_ptr<CPlayer>>;
 	int32_t mCurrentRound = 0;
+	using mSquaresVector_T = std::vector<std::shared_ptr<CSquare>>;
 	mSquaresVector_T mSquares;
+	using mPlayersVector_T = std::vector<std::shared_ptr<CPlayer>>;
 	mPlayersVector_T mPlayers;
 
 public:
@@ -33,4 +28,8 @@ public:
 	bool SetUpPlayers();
 	bool PlayGame();
 	std::string GetWinningPlayer() const;
+	mSquaresVector_T GetSquaresVector()
+	{
+		return mSquares;
+	}
 };

@@ -17,7 +17,7 @@ class CPlayer;
 class CSquare
 {
 private:
-	ESquareType mType = ESquareType::None;
+	ESquareType mType = ESquareType::NONE;
 	std::string mName;
 	int32_t mCost = 0;
 	int32_t mRent = 0;

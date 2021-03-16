@@ -81,3 +81,9 @@ bool CPlayer::GoToJail()
 	SetPosition(kJailPosition);
 	return true;
 }
+
+bool CPlayer::SetBankrupt()
+{
+	mIsBankrupt = true;
+	return true;
+}

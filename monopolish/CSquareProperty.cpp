@@ -16,15 +16,14 @@ CSquareProperty::CSquareProperty(const ESquareType kType, const std::string& kNa
 
 bool CSquareProperty::LandOnSquare(std::shared_ptr<CPlayer> player)
 {
-	std::cout << player->GetName() << " lands on " << GetName() << std::endl;
+	std::cout << player->GetName() << " lands on " << this->GetName() << std::endl;
 
 	// If the property doesn't have an owner
 	if (GetPropertyOwner() == nullptr && player->GetMoney() > 0)
 	{
 		SetPropertyOwner(player);
-		//player->AddProperty(this);
 		player->SubtractMoney(GetCost());
-		std::cout << player->GetName() << " buys " << GetName() << " for " << GlobalConstants::kPOUND_SIGN << GetCost() << std::endl;
+		std::cout << player->GetName() << " buys " << this->GetName() << " for " << GlobalConstants::kPOUND_SIGN << GetCost() << std::endl;
 	}
 
 	// If the property is purchased by someone that isn't the player
@@ -32,17 +31,7 @@ bool CSquareProperty::LandOnSquare(std::shared_ptr<CPlayer> player)
 	{
 		player->SubtractMoney(GetRent());
 		GetPropertyOwner()->AddMoney(GetRent());
-		std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GetRent() << std::endl;
-
-		////if (kGameManager.PlayerOwnsAllPropertyOfColour(player, GetSquareColour()))
-		//{
-		//	player->SubtractMoney(GetRent() * 2);
-		//	GetPropertyOwner()->AddMoney(GetRent() * 2);
-		//	std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GetRent() * 2<< std::endl;
-		//}
-		//else
-		//{
-		//	}		
+		std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GetRent() << std::endl;	
 	}
 	
 	return true;

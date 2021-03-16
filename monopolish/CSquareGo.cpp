@@ -13,6 +13,6 @@ CSquareGo::CSquareGo(const ESquareType kType, const std::string& kName)
 
 bool CSquareGo::LandOnSquare(std::shared_ptr<CPlayer> player)
 {
-	std::cout << player->GetName() << " lands on " << GetName() << std::endl;
+	std::cout << player->GetName() << " lands on " << this->GetName() << std::endl;
 	return true;
 }

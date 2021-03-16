@@ -40,6 +40,7 @@ bool CSquare::SetName(const std::string& kName)
 	return true;
 }
 
+// Get the square's cost.
 int32_t CSquare::GetCost() const
 {
 	return mCost;
@@ -87,10 +88,4 @@ bool CSquare::SetPropertyOwner(const std::shared_ptr<CPlayer> player)
 bool CSquare::IsOwnedByPlayer(const std::shared_ptr<CPlayer> player)
 {
 	return mOwner == player;
-}
-
-bool CSquare::LandOnSquare(std::shared_ptr<CPlayer> player)
-{
-	std::cout << player->GetName() << " lands on " << mName << std::endl;
-	return true;
 }

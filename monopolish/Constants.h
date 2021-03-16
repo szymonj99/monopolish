@@ -8,7 +8,7 @@
 
 namespace GlobalConstants
 {
-	enum EExitCodes
+	enum class EExitCodes
 	{
 		SuccessFinish = 0,
 		LevelFileFail = -50,
@@ -16,7 +16,7 @@ namespace GlobalConstants
 		IncorrectLevelFile = -52,
 	};
 
-	enum ESquareType
+	enum class ESquareType
 	{
 		Property = 1,
 		Go,
@@ -26,10 +26,11 @@ namespace GlobalConstants
 		Jail,
 		GoToJail,
 		FreeParking,
-		None
+		TotalTypes,
+		NONE
 	};
 
-	enum ESquareColour
+	enum class ESquareColour
 	{
 		Red = 0,
 		Grey,
@@ -39,10 +40,11 @@ namespace GlobalConstants
 		Green,
 		Blue,
 		Purple,
+		TotalColours,
 		NONE
 	};
 
-	enum ESquareIndexes
+	enum class ESquareIndexes
 	{
 		Type = 0,
 		FirstName,

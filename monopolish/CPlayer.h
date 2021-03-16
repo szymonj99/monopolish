@@ -7,6 +7,7 @@
 #include "random.h"
 #include <vector>
 #include "Constants.h"
+#include "CSquare.h"
 
 using GlobalConstants::ESquareColour;
 
@@ -16,6 +17,7 @@ private:
 	std::shared_ptr<CPiece> mPiece = nullptr;
 	int64_t mMoney = 1500;
 	int32_t mPosition = 0;
+	bool mIsBankrupt = false;
 
 public:
 	CPlayer(const std::string kPieceName, const int64_t kMoney = 1500, const int32_t kPosition = 0);
@@ -30,4 +32,5 @@ public:
 	bool PassGo(const int32_t kNewPosition);
 	bool SetPosition(const int32_t kPosition);
 	bool GoToJail();
+	bool SetBankrupt();
 };

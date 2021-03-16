@@ -13,14 +13,14 @@ CSquareStation::CSquareStation(const ESquareType kType, const std::string& kName
 
 bool CSquareStation::LandOnSquare(std::shared_ptr<CPlayer> player)
 {
-	std::cout << player->GetName() << " lands on " << GetName() << std::endl;
+	std::cout << player->GetName() << " lands on " << this->GetName() << std::endl;
 
 	// If the property doesn't have an owner
 	if (GetPropertyOwner() == nullptr && player->GetMoney() > 0)
 	{
 		SetPropertyOwner(player);
 		player->SubtractMoney(GlobalConstants::kSTATION_PRICE);
-		std::cout << player->GetName() << " buys " << GetName() << " for " << GlobalConstants::kPOUND_SIGN << GlobalConstants::kSTATION_PRICE << std::endl;
+		std::cout << player->GetName() << " buys " << this->GetName() << " for " << GlobalConstants::kPOUND_SIGN << GlobalConstants::kSTATION_PRICE << std::endl;
 	}
 
 	// If the property is purchased by someone that isn't the player

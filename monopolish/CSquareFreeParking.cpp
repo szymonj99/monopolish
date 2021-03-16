@@ -10,7 +10,7 @@ CSquareFreeParking::CSquareFreeParking(const ESquareType kType, const std::strin
 
 bool CSquareFreeParking::LandOnSquare(std::shared_ptr<CPlayer> player)
 {
-	std::cout << player->GetName() << " lands on " << GetName() << std::endl;
+	std::cout << player->GetName() << " lands on " << this->GetName() << std::endl;
 	std::cout << player->GetName() << " is resting" << std::endl;
 	return true;
 }

@@ -6,6 +6,8 @@
 
 class CSquareProperty : public CSquare
 {
+private:
+	bool mIsMorgaged = false;
 public:
 	CSquareProperty(const ESquareType kType, const std::string& kName, const int32_t kCost, const int32_t kRent, const ESquareColour kColour);
 	bool LandOnSquare(std::shared_ptr<CPlayer> player);

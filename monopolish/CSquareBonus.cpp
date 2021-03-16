@@ -13,7 +13,7 @@ CSquareBonus::CSquareBonus(const ESquareType kType, const std::string& kName)
 
 bool CSquareBonus::LandOnSquare(std::shared_ptr<CPlayer> player)
 {
-	std::cout << player->GetName() << " lands on " << GetName() << std::endl;
+	std::cout << player->GetName() << " lands on " << this->GetName() << std::endl;
 	auto bonus = GetBonus(Random());
 	std::cout << bonus.first << " Gain " << GlobalConstants::kPOUND_SIGN << bonus.second << std::endl;
 	player->AddMoney(bonus.second);

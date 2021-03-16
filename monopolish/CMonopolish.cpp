@@ -34,7 +34,7 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 		std::cout << "Error: level file can't be opened: " << kFileName << "\n";
 		std::cout << "Press enter to exit.";
 		std::cin.get();
-		std::exit(EExitCodes::LevelFileFail);
+		std::exit((int32_t)EExitCodes::LevelFileFail);
 	}
 
 	// Make sure we have enough memory in the vector
@@ -55,74 +55,74 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 			lineMembers.emplace_back(word);
 		}
 		
-		int32_t currentSquareType = static_cast<int32_t>(std::stoi(lineMembers.at(ESquareIndexes::Type)));
+		int32_t currentSquareType = static_cast<int32_t>(std::stoi(lineMembers.at((int32_t)ESquareIndexes::Type)));
 		const ESquareType kType = static_cast<ESquareType>(currentSquareType);
 		// Parse the current square type to int
 		switch (currentSquareType)
 		{
-		case ESquareType::Property:
+		case (int32_t)ESquareType::Property:
 		{
-			const std::string kName = lineMembers.at(ESquareIndexes::FirstName) + " " +
-				lineMembers.at(ESquareIndexes::SecondName);
-			const int32_t kCost = static_cast<int32_t>(std::stoi(lineMembers.at(ESquareIndexes::Cost)));
-			const int32_t kRent = static_cast<int32_t>(std::stoi(lineMembers.at(ESquareIndexes::Rent)));
-			const ESquareColour kColour = static_cast<ESquareColour>(std::stoi(lineMembers.at(ESquareIndexes::ColourGroup)));
+			const std::string kName = lineMembers.at((int32_t)ESquareIndexes::FirstName) + " " +
+				lineMembers.at((int32_t)ESquareIndexes::SecondName);
+			const int32_t kCost = static_cast<int32_t>(std::stoi(lineMembers.at((int32_t)ESquareIndexes::Cost)));
+			const int32_t kRent = static_cast<int32_t>(std::stoi(lineMembers.at((int32_t)ESquareIndexes::Rent)));
+			const ESquareColour kColour = static_cast<ESquareColour>(std::stoi(lineMembers.at((int32_t)ESquareIndexes::ColourGroup)));
 		
-			mSquares.emplace_back(std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour));
+			mSquares.push_back(std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour));
 			break;
 		}
-		case ESquareType::Go:
+		case (int32_t)ESquareType::Go:
 		{
-			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+			const std::string kName = lineMembers.at((int32_t)ESquareIndexes::FirstName);
 
-			mSquares.emplace_back(std::make_shared<CSquareGo>(kType, kName));
+			mSquares.push_back(std::make_shared<CSquareGo>(kType, kName));
 			break;
 		}
-		case ESquareType::Station:
+		case (int32_t)ESquareType::Station:
 		{
-			const std::string kName = lineMembers.at(ESquareIndexes::FirstName) + " " + lineMembers.at(ESquareIndexes::SecondName);
+			const std::string kName = lineMembers.at((int32_t)ESquareIndexes::FirstName) + " " + lineMembers.at((int32_t)ESquareIndexes::SecondName);
 
-			mSquares.emplace_back(std::make_shared<CSquareStation>(kType, kName));
+			mSquares.push_back(std::make_shared<CSquareStation>(kType, kName));
 			break;
 		}
-		case ESquareType::Bonus:
+		case (int32_t)ESquareType::Bonus:
 		{
-			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+			const std::string kName = lineMembers.at((int32_t)ESquareIndexes::FirstName);
 
-			mSquares.emplace_back(std::make_shared<CSquareBonus>(kType, kName));
+			mSquares.push_back(std::make_shared<CSquareBonus>(kType, kName));
 			break;
 		}
-		case ESquareType::Penalty:
+		case (int32_t)ESquareType::Penalty:
 		{
-			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+			const std::string kName = lineMembers.at((int32_t)ESquareIndexes::FirstName);
 
-			mSquares.emplace_back(std::make_shared<CSquarePenalty>(kType, kName));
+			mSquares.push_back(std::make_shared<CSquarePenalty>(kType, kName));
 			break;
 		}
-		case ESquareType::Jail:
+		case (int32_t)ESquareType::Jail:
 		{
-			const std::string kName = lineMembers.at(ESquareIndexes::FirstName);
+			const std::string kName = lineMembers.at((int32_t)ESquareIndexes::FirstName);
 
-			mSquares.emplace_back(std::make_shared<CSquareJail>(kType, kName));
+			mSquares.push_back(std::make_shared<CSquareJail>(kType, kName));
 			break;
 		}
-		case ESquareType::GoToJail:
-		{
-			const std::string kName =
-				lineMembers.at(ESquareIndexes::FirstName) + " " +
-				lineMembers.at(ESquareIndexes::SecondName) + " " +
-				lineMembers.at(ESquareIndexes::ThirdName);
-
-			mSquares.emplace_back(std::make_shared<CSquareGoToJail>(kType, kName));
-			break;
-		}
-		case ESquareType::FreeParking:
+		case (int32_t)ESquareType::GoToJail:
 		{
 			const std::string kName =
-				lineMembers.at(ESquareIndexes::FirstName) + " " +
-				lineMembers.at(ESquareIndexes::SecondName);
+				lineMembers.at((int32_t)ESquareIndexes::FirstName) + " " +
+				lineMembers.at((int32_t)ESquareIndexes::SecondName) + " " +
+				lineMembers.at((int32_t)ESquareIndexes::ThirdName);
 
-			mSquares.emplace_back(std::make_shared<CSquareFreeParking>(kType, kName));
+			mSquares.push_back(std::make_shared<CSquareGoToJail>(kType, kName));
+			break;
+		}
+		case (int32_t)ESquareType::FreeParking:
+		{
+			const std::string kName =
+				lineMembers.at((int32_t)ESquareIndexes::FirstName) + " " +
+				lineMembers.at((int32_t)ESquareIndexes::SecondName);
+
+			mSquares.push_back(std::make_shared<CSquareFreeParking>(kType, kName));
 			break;
 		}
 		default:
@@ -130,7 +130,7 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 			// Handle error here when the line doesn't match any square types.
 			std::cout << "Error when loading file. Press Enter to exit." << std::endl;
 			std::cin.get();
-			std::exit(EExitCodes::LevelFileFail);
+			std::exit((int32_t)EExitCodes::LevelFileFail);
 		}
 		}
 	}
@@ -159,7 +159,7 @@ int64_t CMonopolish::GetSeed(const std::string& kSeedFile = "seed.txt")
 		std::cout << "Error: seed file can't be opened: " << kSeedFile << "\n";
 		std::cout << "Press enter to exit.";
 		std::cin.get();
-		std::exit(EExitCodes::SeedFileFail);
+		std::exit((int32_t)EExitCodes::SeedFileFail);
 	}
 
 	int64_t seed;
