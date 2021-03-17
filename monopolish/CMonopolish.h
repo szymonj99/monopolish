@@ -10,6 +10,9 @@
 #include "CSquare.h"
 #include "Constants.h"
 
+class CSquare;
+class CPlayer;
+
 class CMonopolish
 {
 private:
@@ -28,8 +31,5 @@ public:
 	bool SetUpPlayers();
 	bool PlayGame();
 	std::string GetWinningPlayer() const;
-	mSquaresVector_T GetSquaresVector()
-	{
-		return mSquares;
-	}
+	mSquaresVector_T GetVectorOfAllSquares();
 };

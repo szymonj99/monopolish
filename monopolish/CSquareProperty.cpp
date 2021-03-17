@@ -22,16 +22,28 @@ bool CSquareProperty::LandOnSquare(std::shared_ptr<CPlayer> player)
 	if (GetPropertyOwner() == nullptr && player->GetMoney() > 0)
 	{
 		SetPropertyOwner(player);
+		player->AddOwnedPropertyIndex(this->GetIndex());
 		player->SubtractMoney(GetCost());
 		std::cout << player->GetName() << " buys " << this->GetName() << " for " << GlobalConstants::kPOUND_SIGN << GetCost() << std::endl;
 	}
 
 	// If the property is purchased by someone that isn't the player
-	if (GetPropertyOwner() != nullptr && GetPropertyOwner() != player)
+	if (!IsMortgaged() && GetPropertyOwner() != nullptr && GetPropertyOwner() != player)
 	{
-		player->SubtractMoney(GetRent());
-		GetPropertyOwner()->AddMoney(GetRent());
-		std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GetRent() << std::endl;	
+		int32_t multiplier = 1;
+		// Gotta love hard-coded values
+		// The vector stores how many total properties there are for each colour
+		// The index represents ESquareColour.
+		const std::vector<uint32_t> kPropertyCountByColour{ 2,2,2,3,2,2,3,2 };
+		// Check if the property owner owns all properties of this colour
+		if(GetPropertyOwner()->GetOwnedColouredPropertyCount(GetSquareColour()) == kPropertyCountByColour.at((int32_t)GetSquareColour()))
+		{
+			// Doubling rent if the player lands on a property that's owned by someone else, that owns all properties of that colour
+			multiplier = 2;
+		}
+		player->SubtractMoney(GetRent() * multiplier);
+		GetPropertyOwner()->AddMoney(GetRent() * multiplier);
+		std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GetRent() * multiplier << std::endl;
 	}
 	
 	return true;

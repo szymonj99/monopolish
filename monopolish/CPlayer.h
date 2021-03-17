@@ -3,6 +3,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include "CMonopolish.h"
 #include "CPiece.h"
 #include "random.h"
 #include <vector>
@@ -11,6 +12,9 @@
 
 using GlobalConstants::ESquareColour;
 
+class CMonopolish;
+class CSquare;
+
 class CPlayer
 {
 private:
@@ -18,6 +22,8 @@ private:
 	int64_t mMoney = 1500;
 	int32_t mPosition = 0;
 	bool mIsBankrupt = false;
+	std::vector<uint32_t> mOwnedPropertiesIndexes;
+	std::vector<uint32_t> mCountOfOwnedPropertiesByColour;
 
 public:
 	CPlayer(const std::string kPieceName, const int64_t kMoney = 1500, const int32_t kPosition = 0);
@@ -33,4 +39,10 @@ public:
 	bool SetPosition(const int32_t kPosition);
 	bool GoToJail();
 	bool SetBankrupt();
+	bool ClearOwnedProperties();
+	bool AddOwnedPropertyIndex(const uint32_t kIndex);
+	uint32_t GetOwnedColouredPropertyCount(const ESquareColour kColour) const;
+	bool ManageMortgage(CMonopolish* gameManager);
+	bool UnownAllProperties(std::vector<std::shared_ptr<CSquare>>& allSquares);
+	bool UnmortgageAllProperties(std::vector<std::shared_ptr<CSquare>>& allSquares);
 };

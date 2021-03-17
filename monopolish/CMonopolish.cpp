@@ -67,7 +67,7 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 			const int32_t kCost = static_cast<int32_t>(std::stoi(lineMembers.at((int32_t)ESquareIndexes::Cost)));
 			const int32_t kRent = static_cast<int32_t>(std::stoi(lineMembers.at((int32_t)ESquareIndexes::Rent)));
 			const ESquareColour kColour = static_cast<ESquareColour>(std::stoi(lineMembers.at((int32_t)ESquareIndexes::ColourGroup)));
-		
+
 			mSquares.push_back(std::make_shared<CSquareProperty>(kType, kName, kCost, kRent, kColour));
 			break;
 		}
@@ -135,6 +135,11 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 		}
 	}
 
+	for (int32_t i = 0; i < mSquares.size(); i++)
+	{
+		mSquares.at(i)->SetIndex(i);
+	}
+
 	return true;
 }
 
@@ -142,10 +147,12 @@ bool CMonopolish::LoadSquares(const std::string& kFileName = "monopoly.txt")
 bool CMonopolish::SetUpPlayers()
 {
 	mPlayers.clear();
-	const int16_t kMaxPlayers = 2;
+	const int16_t kMaxPlayers = 4;
 	mPlayers.reserve(kMaxPlayers);
 	mPlayers.emplace_back(std::make_unique<CPlayer>("Dog"));
 	mPlayers.emplace_back(std::make_unique<CPlayer>("Car"));
+	mPlayers.emplace_back(std::make_unique<CPlayer>("Shoe"));
+	mPlayers.emplace_back(std::make_unique<CPlayer>("Hat"));
 	return true;
 }
 
@@ -185,6 +192,29 @@ bool CMonopolish::PrintWelcomeMessage()
 // Play the game.
 bool CMonopolish::PlayGame()
 {
+	//while (mPlayers.size() > 1)
+	//{
+	//	// Player rolls number here
+	//	for (int16_t playerIndex = 0; playerIndex < mPlayers.size(); playerIndex++)
+	//	{
+	//		const auto kPlayerRoll = mPlayers.at(playerIndex)->RollNumber();
+	//		std::cout << mPlayers.at(playerIndex)->GetName() << " rolls " << kPlayerRoll << std::endl;
+	//		mPlayers.at(playerIndex)->MoveForward(kPlayerRoll);
+	//		mSquares.at(mPlayers.at(playerIndex)->GetPosition())->LandOnSquare(mPlayers.at(playerIndex));
+	//		std::cout << mPlayers.at(playerIndex)->GetName() << " has " << kPOUND_SIGN << mPlayers.at(playerIndex)->GetMoney() << std::endl;
+
+	//		// Manage mortgage here
+	//		if (!mPlayers.at(playerIndex)->ManageMortgage(this))
+	//		{
+	//			std::cout << "Oh no!... " << mPlayers.at(playerIndex)->GetName() << " went bankrupt!!!" << std::endl;
+	//			// Bankrupt the player here
+	//			mPlayers.at(playerIndex)->SetBankrupt();
+	//			mPlayers.at(playerIndex)->UnmortgageAllProperties(mSquares);
+	//			mPlayers.at(playerIndex)->UnownAllProperties(mSquares);
+	//			std::erase(mPlayers, mPlayers.at(playerIndex));
+	//		}
+	//	}
+	//}
 	for (mCurrentRound = 0; mCurrentRound < kROUNDS_TO_PLAY; mCurrentRound++)
 	{
 		// Player rolls number here
@@ -195,6 +225,17 @@ bool CMonopolish::PlayGame()
 			mPlayers.at(playerIndex)->MoveForward(kPlayerRoll);
 			mSquares.at(mPlayers.at(playerIndex)->GetPosition())->LandOnSquare(mPlayers.at(playerIndex));
 			std::cout << mPlayers.at(playerIndex)->GetName() << " has " << kPOUND_SIGN << mPlayers.at(playerIndex)->GetMoney() << std::endl;
+			
+			// Manage mortgage here
+			if (!mPlayers.at(playerIndex)->ManageMortgage(this))
+			{
+				std::cout << "Oh no!... " << mPlayers.at(playerIndex)->GetName() << " went bankrupt!!!" << std::endl;
+				// Bankrupt the player here
+				mPlayers.at(playerIndex)->SetBankrupt();
+				mPlayers.at(playerIndex)->UnmortgageAllProperties(mSquares);
+				mPlayers.at(playerIndex)->UnownAllProperties(mSquares);
+				std::erase(mPlayers, mPlayers.at(playerIndex));
+			}
 		}
 	}
 
@@ -224,6 +265,11 @@ std::string CMonopolish::GetWinningPlayer() const
 	}
 
 	return winningPlayer;
+}
+
+CMonopolish::mSquaresVector_T CMonopolish::GetVectorOfAllSquares()
+{
+	return mSquares;
 }
 
 // Set up the game and play until game is over.

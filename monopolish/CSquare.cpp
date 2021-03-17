@@ -89,3 +89,25 @@ bool CSquare::IsOwnedByPlayer(const std::shared_ptr<CPlayer> player)
 {
 	return mOwner == player;
 }
+
+bool CSquare::SetIndex(const uint32_t kIndex)
+{
+	mIndex = kIndex;
+	return true;
+}
+
+uint32_t CSquare::GetIndex() const
+{
+	return mIndex;
+}
+
+bool CSquare::IsMortgaged() const
+{
+	return mIsMortgaged;
+}
+
+bool CSquare::SetMortgaged(const bool kMortgaged)
+{
+	mIsMortgaged = kMortgaged;
+	return true;
+}

@@ -23,6 +23,8 @@ private:
 	int32_t mRent = 0;
 	ESquareColour mColour = ESquareColour::NONE;
 	std::shared_ptr<CPlayer> mOwner = nullptr;
+	uint32_t mIndex = UINT32_MAX;
+	bool mIsMortgaged = false;
 
 public:
 	CSquare() {};
@@ -54,6 +56,10 @@ public:
 	bool SetPropertyOwner(std::shared_ptr<CPlayer> player);
 	// Returns true if the current square is owned by the player.
 	bool IsOwnedByPlayer(const std::shared_ptr<CPlayer> player);
+	bool SetIndex(const uint32_t kIndex);
+	uint32_t GetIndex() const;
+	bool IsMortgaged() const;
+	bool SetMortgaged(const bool kMortgaged);
 	// Perform actions when landing on the current square.
 	virtual bool LandOnSquare(std::shared_ptr<CPlayer> player) = 0;
 };
