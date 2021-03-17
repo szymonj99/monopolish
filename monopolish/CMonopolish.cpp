@@ -192,7 +192,31 @@ bool CMonopolish::PrintWelcomeMessage()
 // Play the game.
 bool CMonopolish::PlayGame()
 {
-	//while (mPlayers.size() > 1)
+	while (mPlayers.size() > 1)
+	{
+		// Player rolls number here
+		for (int16_t playerIndex = 0; playerIndex < mPlayers.size(); playerIndex++)
+		{
+			const auto kPlayerRoll = mPlayers.at(playerIndex)->RollNumber();
+			std::cout << mPlayers.at(playerIndex)->GetName() << " rolls " << kPlayerRoll << std::endl;
+			mPlayers.at(playerIndex)->MoveForward(kPlayerRoll);
+			mSquares.at(mPlayers.at(playerIndex)->GetPosition())->LandOnSquare(mPlayers.at(playerIndex));
+			std::cout << mPlayers.at(playerIndex)->GetName() << " has " << kPOUND_SIGN << mPlayers.at(playerIndex)->GetMoney() << std::endl;
+
+			// Manage mortgage here
+			if (!mPlayers.at(playerIndex)->ManageMortgage(this))
+			{
+				std::cout << "Oh no!... " << mPlayers.at(playerIndex)->GetName() << " went bankrupt!!!" << std::endl;
+				// Bankrupt the player here
+				mPlayers.at(playerIndex)->SetBankrupt();
+				mPlayers.at(playerIndex)->UnmortgageAllProperties(mSquares);
+				mPlayers.at(playerIndex)->UnownAllProperties(mSquares);
+				mPlayers.erase(mPlayers.begin() + playerIndex);
+				//std::erase(mPlayers, mPlayers.at(playerIndex));
+			}
+		}
+	}
+	//for (mCurrentRound = 0; mCurrentRound < kROUNDS_TO_PLAY; mCurrentRound++)
 	//{
 	//	// Player rolls number here
 	//	for (int16_t playerIndex = 0; playerIndex < mPlayers.size(); playerIndex++)
@@ -202,7 +226,7 @@ bool CMonopolish::PlayGame()
 	//		mPlayers.at(playerIndex)->MoveForward(kPlayerRoll);
 	//		mSquares.at(mPlayers.at(playerIndex)->GetPosition())->LandOnSquare(mPlayers.at(playerIndex));
 	//		std::cout << mPlayers.at(playerIndex)->GetName() << " has " << kPOUND_SIGN << mPlayers.at(playerIndex)->GetMoney() << std::endl;
-
+	//		
 	//		// Manage mortgage here
 	//		if (!mPlayers.at(playerIndex)->ManageMortgage(this))
 	//		{
@@ -215,29 +239,6 @@ bool CMonopolish::PlayGame()
 	//		}
 	//	}
 	//}
-	for (mCurrentRound = 0; mCurrentRound < kROUNDS_TO_PLAY; mCurrentRound++)
-	{
-		// Player rolls number here
-		for (int16_t playerIndex = 0; playerIndex < mPlayers.size(); playerIndex++)
-		{
-			const auto kPlayerRoll = mPlayers.at(playerIndex)->RollNumber();
-			std::cout << mPlayers.at(playerIndex)->GetName() << " rolls " << kPlayerRoll << std::endl;
-			mPlayers.at(playerIndex)->MoveForward(kPlayerRoll);
-			mSquares.at(mPlayers.at(playerIndex)->GetPosition())->LandOnSquare(mPlayers.at(playerIndex));
-			std::cout << mPlayers.at(playerIndex)->GetName() << " has " << kPOUND_SIGN << mPlayers.at(playerIndex)->GetMoney() << std::endl;
-			
-			// Manage mortgage here
-			if (!mPlayers.at(playerIndex)->ManageMortgage(this))
-			{
-				std::cout << "Oh no!... " << mPlayers.at(playerIndex)->GetName() << " went bankrupt!!!" << std::endl;
-				// Bankrupt the player here
-				mPlayers.at(playerIndex)->SetBankrupt();
-				mPlayers.at(playerIndex)->UnmortgageAllProperties(mSquares);
-				mPlayers.at(playerIndex)->UnownAllProperties(mSquares);
-				std::erase(mPlayers, mPlayers.at(playerIndex));
-			}
-		}
-	}
 
 	std::cout << "Game Over\n";
 	for (int16_t i = 0; i < mPlayers.size(); i++)
