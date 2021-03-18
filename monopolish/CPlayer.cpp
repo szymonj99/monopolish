@@ -111,6 +111,8 @@ uint32_t CPlayer::GetOwnedColouredPropertyCount(const ESquareColour kColour) con
 	return mCountOfOwnedPropertiesByColour.at((int32_t)kColour);
 }
 
+// I don't think this method is as well-written as it could be.
+// Honestly, it's quite a mess.
 bool CPlayer::ManageMortgage(CMonopolish* gameManager)
 {
 	// Only try managing the mortgage if player's money is below 0
@@ -121,30 +123,30 @@ bool CPlayer::ManageMortgage(CMonopolish* gameManager)
 		auto allProperties = gameManager->GetVectorOfAllSquares();
 
 		using VectorOfProperties_T = std::vector<std::shared_ptr<CSquare>>;
-		VectorOfProperties_T ownedProperties;
-		ownedProperties.reserve(mOwnedPropertiesIndexes.size());
 
-		// I have indexes of owned properties by the player
+		VectorOfProperties_T unmortgagedOwnedProperties;
+		unmortgagedOwnedProperties.reserve(mOwnedPropertiesIndexes.size());
+
 		for (uint32_t index = 0; index < mOwnedPropertiesIndexes.size(); index++)
 		{
-			//ownedProperties
-			ownedProperties.push_back(allProperties.at(mOwnedPropertiesIndexes.at(index)));
-			
+			if (!allProperties.at(mOwnedPropertiesIndexes.at(index))->IsMortgaged())
+			{
+				unmortgagedOwnedProperties.push_back(allProperties.at(mOwnedPropertiesIndexes.at(index)));
+			}		
 		}
 
-		// Sort in Ascending order of property cost
-		std::sort(ownedProperties.begin(), ownedProperties.end(), [](const std::shared_ptr<CSquare>& lhs, const std::shared_ptr<CSquare>& rhs) {
+		std::sort(unmortgagedOwnedProperties.begin(), unmortgagedOwnedProperties.end(), [](const std::shared_ptr<CSquare>& lhs, const std::shared_ptr<CSquare>& rhs) {
 			return lhs->GetCost() < rhs->GetCost(); });
 
 		// Check if the player can actually reach positive balance if they were to mortgage
-		uint64_t runningTotal = 0;
+		int64_t runningTotal = 0;
 		uint32_t propertiesMortgaged = 0;
 		bool canMortgage = false;
-		for (uint32_t index = 0; index < ownedProperties.size(); index++)
+		for (uint32_t index = 0; index < unmortgagedOwnedProperties.size(); index++)
 		{
 			propertiesMortgaged++;
-			runningTotal += ownedProperties.at(index)->GetCost();
-			if ((this->GetMoney() + runningTotal) > 0)
+			runningTotal += unmortgagedOwnedProperties.at(index)->GetCost();	
+			if ((GetMoney() + runningTotal) > 0)
 			{
 				canMortgage = true;
 				break;
@@ -158,17 +160,17 @@ bool CPlayer::ManageMortgage(CMonopolish* gameManager)
 		// We can mortgage the properties.
 		for (uint32_t index = 0; index < propertiesMortgaged; index++)
 		{
-			ownedProperties.at(index)->SetMortgaged(true);
-			this->AddMoney(ownedProperties.at(index)->GetCost());
-			std::cout << this->GetName() << " mortgages " << ownedProperties.at(index)->GetName() << " for " << GlobalConstants::kPOUND_SIGN << ownedProperties.at(index)->GetCost() << std::endl;
+			unmortgagedOwnedProperties.at(index)->SetMortgaged(true);
+			this->AddMoney(unmortgagedOwnedProperties.at(index)->GetCost());
+			std::cout << this->GetName() << " mortgages " << unmortgagedOwnedProperties.at(index)->GetName() << " for " << GlobalConstants::kPOUND_SIGN << unmortgagedOwnedProperties.at(index)->GetCost() << std::endl;
+			std::cout << this->GetName() << " has " << GlobalConstants::kPOUND_SIGN << this->GetMoney() << std::endl;
 		}
 		return true;
 	}
 
+	// Otherwise, see if we can pay off the mortgage on properties that the player has mortgaged.
 	if (GetMoney() > 0)
 	{
-		// See if the player can pay off some mortgaged properties
-
 		// Maybe start by creating vector that stores all properties
 		auto allProperties = gameManager->GetVectorOfAllSquares();
 
@@ -185,6 +187,11 @@ bool CPlayer::ManageMortgage(CMonopolish* gameManager)
 			}
 		}
 
+		if (mortgagedProperties.size() == 0)
+		{
+			return true;
+		}
+
 		// Sort in Ascending order of property cost
 		std::sort(mortgagedProperties.begin(), mortgagedProperties.end(), [](const std::shared_ptr<CSquare>& lhs, const std::shared_ptr<CSquare>& rhs) {
 			return lhs->GetCost() < rhs->GetCost(); });
@@ -196,6 +203,7 @@ bool CPlayer::ManageMortgage(CMonopolish* gameManager)
 				std::cout << GetName() << " unmortgages " << square->GetName() << " for " << GlobalConstants::kPOUND_SIGN << square->GetCost() << std::endl;
 				square->SetMortgaged(false);
 				SubtractMoney(square->GetCost());
+				std::cout << GetName() << " has " << GlobalConstants::kPOUND_SIGN << GetMoney() << std::endl;
 			}
 			else
 			{

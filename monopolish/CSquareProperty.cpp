@@ -43,7 +43,7 @@ bool CSquareProperty::LandOnSquare(std::shared_ptr<CPlayer> player)
 		}
 		player->SubtractMoney(GetRent() * multiplier);
 		GetPropertyOwner()->AddMoney(GetRent() * multiplier);
-		std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GetRent() * multiplier << std::endl;
+		std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GetRent() * multiplier << " to " << GetPropertyOwner()->GetName() << std::endl;
 	}
 	
 	return true;

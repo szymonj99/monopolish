@@ -192,6 +192,7 @@ bool CMonopolish::PrintWelcomeMessage()
 // Play the game.
 bool CMonopolish::PlayGame()
 {
+	// While loop that should eliminate 3 players, and leave 1 player as the winner
 	//while (mPlayers.size() > 1)
 	//{
 	//	// Player rolls number here

@@ -15,7 +15,7 @@ bool CSquareGoToJail::LandOnSquare(std::shared_ptr<CPlayer> player)
 {
 	std::cout << player->GetName() << " lands on " << this->GetName() << std::endl;
 	std::cout << player->GetName() << " goes to Jail" << std::endl;
-	std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GlobalConstants::kJAIL_PRICE <<  std::endl;
+	std::cout << player->GetName() << " pays " << GlobalConstants::kPOUND_SIGN << GlobalConstants::kJAIL_PRICE << " to Jail." << std::endl;
 	player->SubtractMoney(GlobalConstants::kJAIL_PRICE);
 	player->GoToJail();
 
