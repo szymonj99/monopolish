@@ -111,6 +111,12 @@ uint32_t CPlayer::GetOwnedColouredPropertyCount(const ESquareColour kColour) con
 	return mCountOfOwnedPropertiesByColour.at((int32_t)kColour);
 }
 
+bool CPlayer::IncrementColouredPropertyCount(const ESquareColour kColour)
+{
+	mCountOfOwnedPropertiesByColour.at((int32_t)kColour)++;
+	return true;
+}
+
 // I don't think this method is as well-written as it could be.
 // Honestly, it's quite a mess.
 bool CPlayer::ManageMortgage(CMonopolish* gameManager)

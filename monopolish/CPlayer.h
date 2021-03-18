@@ -41,6 +41,7 @@ public:
 	bool SetBankrupt();
 	bool ClearOwnedProperties();
 	bool AddOwnedPropertyIndex(const uint32_t kIndex);
+	bool IncrementColouredPropertyCount(const ESquareColour kColour);
 	uint32_t GetOwnedColouredPropertyCount(const ESquareColour kColour) const;
 	bool ManageMortgage(CMonopolish* gameManager);
 	bool UnownAllProperties(std::vector<std::shared_ptr<CSquare>>& allSquares);

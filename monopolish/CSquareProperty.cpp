@@ -24,6 +24,7 @@ bool CSquareProperty::LandOnSquare(std::shared_ptr<CPlayer> player)
 		SetPropertyOwner(player);
 		player->AddOwnedPropertyIndex(this->GetIndex());
 		player->SubtractMoney(GetCost());
+		player->IncrementColouredPropertyCount(GetSquareColour());
 		std::cout << player->GetName() << " buys " << this->GetName() << " for " << GlobalConstants::kPOUND_SIGN << GetCost() << std::endl;
 	}
 
