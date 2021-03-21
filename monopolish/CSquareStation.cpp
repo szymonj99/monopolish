@@ -9,6 +9,7 @@ CSquareStation::CSquareStation(const ESquareType kType, const std::string& kName
 {
 	SetType(kType);
 	SetName(kName);
+	SetCost(GlobalConstants::kSTATION_PRICE);
 }
 
 bool CSquareStation::LandOnSquare(std::shared_ptr<CPlayer> player)
@@ -20,6 +21,7 @@ bool CSquareStation::LandOnSquare(std::shared_ptr<CPlayer> player)
 	{
 		SetPropertyOwner(player);
 		player->SubtractMoney(GlobalConstants::kSTATION_PRICE);
+		player->AddOwnedPropertyIndex(this->GetIndex());
 		std::cout << player->GetName() << " buys " << this->GetName() << " for " << GlobalConstants::kPOUND_SIGN << GlobalConstants::kSTATION_PRICE << std::endl;
 	}
 

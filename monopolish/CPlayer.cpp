@@ -142,7 +142,7 @@ bool CPlayer::ManageMortgage(CMonopolish* gameManager)
 		}
 
 		std::sort(unmortgagedOwnedProperties.begin(), unmortgagedOwnedProperties.end(), [](const std::shared_ptr<CSquare>& lhs, const std::shared_ptr<CSquare>& rhs) {
-			return lhs->GetCost() < rhs->GetCost(); });
+			return lhs->GetIndex() < rhs->GetIndex(); });
 
 		// Check if the player can actually reach positive balance if they were to mortgage
 		int64_t runningTotal = 0;
@@ -200,7 +200,7 @@ bool CPlayer::ManageMortgage(CMonopolish* gameManager)
 
 		// Sort in Ascending order of property cost
 		std::sort(mortgagedProperties.begin(), mortgagedProperties.end(), [](const std::shared_ptr<CSquare>& lhs, const std::shared_ptr<CSquare>& rhs) {
-			return lhs->GetCost() < rhs->GetCost(); });
+			return lhs->GetIndex() < rhs->GetIndex(); });
 
 		for (auto& square : mortgagedProperties)
 		{
